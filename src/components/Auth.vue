@@ -1,9 +1,17 @@
 <script setup>
 import { useModalStore } from "@/stores/modal";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 const tab = ref("login");
-
+const schema = reactive({
+  name: "required",
+  email: "",
+  age: "",
+  password: "",
+  confirm_password: "",
+  country: "",
+  tos: "",
+});
 const modalStore = useModalStore();
 // { isOpen: modalVisibility }前面的isOpen是modalStore的isOpen，後面的modalVisibility是指在此頁用modalVisibility來代表isOpen
 const { hiddenClass, isOpen: modalVisibility } = storeToRefs(modalStore);
@@ -100,7 +108,7 @@ const closeModal = () => {
             </button>
           </form>
           <!-- Registration Form -->
-          <vee-form v-show="tab === 'register'">
+          <vee-form v-show="tab === 'register'" :validation-schema="schema">
             <!-- Name -->
             <div class="mb-3">
               <label class="inline-block mb-2">Name</label>
