@@ -1,19 +1,23 @@
 <script setup>
-import { useModalStore } from '@/stores/modal'
-import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
-const tab = ref('login')
+import { useModalStore } from "@/stores/modal";
+import { storeToRefs } from "pinia";
+import { ref } from "vue";
+const tab = ref("login");
 
-const modalStore = useModalStore()
+const modalStore = useModalStore();
 // { isOpen: modalVisibility }前面的isOpen是modalStore的isOpen，後面的modalVisibility是指在此頁用modalVisibility來代表isOpen
-const { hiddenClass, isOpen: modalVisibility } = storeToRefs(modalStore)
+const { hiddenClass, isOpen: modalVisibility } = storeToRefs(modalStore);
 const closeModal = () => {
-  modalVisibility.value = false
-}
+  modalVisibility.value = false;
+};
 </script>
 <template>
   <!-- Auth Modal -->
-  <div class="fixed z-10 inset-0 overflow-y-auto" id="modal" :class="hiddenClass">
+  <div
+    class="fixed z-10 inset-0 overflow-y-auto"
+    id="modal"
+    :class="hiddenClass"
+  >
     <div
       class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
     >
@@ -22,7 +26,9 @@ const closeModal = () => {
       </div>
 
       <!-- This element is to trick the browser into centering the modal contents. -->
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+        >&#8203;</span
+      >
 
       <div
         class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
@@ -94,12 +100,13 @@ const closeModal = () => {
             </button>
           </form>
           <!-- Registration Form -->
-          <form v-show="tab === 'register'">
+          <vee-form v-show="tab === 'register'">
             <!-- Name -->
             <div class="mb-3">
               <label class="inline-block mb-2">Name</label>
-              <input
+              <vee-field
                 type="text"
+                name="name"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Name"
               />
@@ -107,7 +114,7 @@ const closeModal = () => {
             <!-- Email -->
             <div class="mb-3">
               <label class="inline-block mb-2">Email</label>
-              <input
+              <vee-field
                 type="email"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Email"
@@ -152,7 +159,10 @@ const closeModal = () => {
             </div>
             <!-- TOS -->
             <div class="mb-3 pl-6">
-              <input type="checkbox" class="w-4 h-4 float-left -ml-6 mt-1 rounded" />
+              <input
+                type="checkbox"
+                class="w-4 h-4 float-left -ml-6 mt-1 rounded"
+              />
               <label class="inline-block">Accept terms of service</label>
             </div>
             <button
@@ -161,7 +171,7 @@ const closeModal = () => {
             >
               Submit
             </button>
-          </form>
+          </vee-form>
         </div>
       </div>
     </div>
