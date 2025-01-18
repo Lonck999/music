@@ -4,7 +4,7 @@ import { storeToRefs } from "pinia";
 import { ref, reactive } from "vue";
 const tab = ref("login");
 const schema = reactive({
-  name: "required",
+  name: "required|min:3|max:100|alpha_spaces",
   email: "",
   age: "",
   password: "",
