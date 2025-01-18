@@ -8,9 +8,9 @@ import { required } from "@vee-validate/rules";
 
 export default {
   install(app) {
-    app.component("Form", VeeForm);
-    app.component("Field", VeeField);
-    app.component("ErrorMessage", VeeErrorMessage);
+    app.component("VeeForm", VeeForm);
+    app.component("VeeField", VeeField);
+    app.component("VeeErrorMessage", VeeErrorMessage);
 
     defineRule("required", required);
   },
