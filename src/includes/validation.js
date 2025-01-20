@@ -13,7 +13,7 @@ import {
   min_value as minValue,
   max_value as maxValue,
   confirmed,
-  not_one_of as exclude,
+  not_one_of as excluded,
 } from "@vee-validate/rules";
 
 export default {
@@ -39,6 +39,6 @@ export default {
     // 定義確認密碼
     defineRule("confirmed", confirmed);
     // 定義不在列表中
-    defineRule("exclude", exclude);
+    defineRule("excluded", excluded);
   },
 };
