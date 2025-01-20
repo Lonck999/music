@@ -8,9 +8,12 @@ const schema = reactive({
   email: "required|min:3|max:100|email",
   age: "required|min_value:18|max_value:100",
   password: "required|min:9|max:100|excluded:password",
-  confirm_password: "confirmed:@password",
-  country: "required|excluded:Antarctica",
-  tos: "required",
+  confirm_password: "password_mismatch:@password",
+  country: "required|country_excluded:Antarctica",
+  tos: "tos",
+});
+const userData = reactive({
+  country: "USA",
 });
 const modalStore = useModalStore();
 // { isOpen: modalVisibility }前面的isOpen是modalStore的isOpen，後面的modalVisibility是指在此頁用modalVisibility來代表isOpen
@@ -115,6 +118,7 @@ const register = (values) => {
             v-show="tab === 'register'"
             :validation-schema="schema"
             @submit="register"
+            :initial-values="userData"
           >
             <!-- Name -->
             <div class="mb-3">
