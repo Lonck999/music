@@ -1,15 +1,29 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 const loginSchema = reactive({
   email: "required|email",
   password: "required|min:9|max:100",
 });
+const login_in_submission = ref(false);
+const login_show_alert = ref(false);
+const login_alert_variant = ref("bg-blue-500");
+const login_alert_msg = ref("Please wait! Your account is being created.");
 
 function login(values) {
-  console.log(values);
+  login_in_submission.value = true;
+  login_show_alert.value = true;
+  login_alert_variant.value = "bg-blue-500";
+  login_alert_msg.value = "Please wait! We are logging you in.";
 }
 </script>
 <template>
+  <div
+    class="text-white text-center font-bold p-4 mb-4"
+    v-if="login_show_alert"
+    :class="login_alert_variant"
+  >
+    <p>{{ login_alert_msg }}</p>
+  </div>
   <!-- Login Form -->
   <vee-form :validation-schema="loginSchema" @submit="login">
     <!-- Email -->
@@ -36,6 +50,7 @@ function login(values) {
     </div>
     <button
       type="submit"
+      :disabled="login_in_submission"
       class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
     >
       Submit
