@@ -3,6 +3,10 @@ import { useModalStore } from "@/stores/modal";
 import { storeToRefs } from "pinia";
 import { ref, reactive } from "vue";
 const tab = ref("login");
+const loginSchema = reactive({
+  email: "required|email",
+  password: "required|min:9|max:100",
+});
 const schema = reactive({
   name: "required|min:3|max:100|alpha_spaces",
   email: "required|min:3|max:100|email",
@@ -15,6 +19,13 @@ const schema = reactive({
 const userData = reactive({
   country: "USA",
 });
+const reg_in_submission = ref(false);
+const reg_show_alert = ref(false);
+const reg_alert_variant = ref("bg-blue-500");
+const reg_alert_msg = ref("Please wait! Your account is being created.");
+function login(values) {
+  console.log(values);
+}
 const modalStore = useModalStore();
 // { isOpen: modalVisibility }前面的isOpen是modalStore的isOpen，後面的modalVisibility是指在此頁用modalVisibility來代表isOpen
 const { hiddenClass, isOpen: modalVisibility } = storeToRefs(modalStore);
@@ -22,7 +33,13 @@ const closeModal = () => {
   modalVisibility.value = false;
 };
 const register = (values) => {
-  console.log(values);
+  reg_show_alert.value = true;
+  reg_in_submission.value = true;
+  reg_alert_variant.value = "bg-blue-500";
+  reg_alert_msg.value = "Please wait! Your account is being created.";
+
+  reg_alert_variant.value = "bg-green-500";
+  reg_alert_msg.value = "Success! Your account has been created.";
 };
 </script>
 <template>
@@ -87,24 +104,32 @@ const register = (values) => {
           </ul>
 
           <!-- Login Form -->
-          <form v-show="tab === 'login'">
+          <vee-form
+            v-show="tab === 'login'"
+            :validation-schema="loginSchema"
+            @submit="login"
+          >
             <!-- Email -->
             <div class="mb-3">
               <label class="inline-block mb-2">Email</label>
-              <input
+              <vee-field
                 type="email"
+                name="email"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Email"
               />
+              <VeeErrorMessage class="text-red-600" name="email" />
             </div>
             <!-- Password -->
             <div class="mb-3">
               <label class="inline-block mb-2">Password</label>
-              <input
+              <vee-field
                 type="password"
+                name="password"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Password"
               />
+              <VeeErrorMessage class="text-red-600" name="password" />
             </div>
             <button
               type="submit"
@@ -112,8 +137,15 @@ const register = (values) => {
             >
               Submit
             </button>
-          </form>
+          </vee-form>
           <!-- Registration Form -->
+          <div
+            class="text-white text-center font-bold p-4 mb-4 rounded"
+            v-if="reg_show_alert"
+            :class="reg_alert_variant"
+          >
+            {{ reg_alert_msg }}
+          </div>
           <vee-form
             v-show="tab === 'register'"
             :validation-schema="schema"
@@ -211,6 +243,7 @@ const register = (values) => {
             <button
               type="submit"
               class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
+              :disabled="reg_in_submission"
             >
               Submit
             </button>
