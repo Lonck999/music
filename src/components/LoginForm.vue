@@ -1,11 +1,17 @@
-<script setup></script>
+<script setup>
+import { reactive } from "vue";
+const loginSchema = reactive({
+  email: "required|email",
+  password: "required|min:9|max:100",
+});
+
+function login(values) {
+  console.log(values);
+}
+</script>
 <template>
   <!-- Login Form -->
-  <vee-form
-    v-show="tab === 'login'"
-    :validation-schema="loginSchema"
-    @submit="login"
-  >
+  <vee-form :validation-schema="loginSchema" @submit="login">
     <!-- Email -->
     <div class="mb-3">
       <label class="inline-block mb-2">Email</label>

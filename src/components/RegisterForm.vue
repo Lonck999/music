@@ -1,4 +1,32 @@
-<script setup></script>
+<script setup>
+import { ref, reactive } from "vue";
+const schema = reactive({
+  name: "required|min:3|max:100|alpha_spaces",
+  email: "required|min:3|max:100|email",
+  age: "required|min_value:18|max_value:100",
+  password: "required|min:9|max:100|excluded:password",
+  confirm_password: "password_mismatch:@password",
+  country: "required|country_excluded:Antarctica",
+  tos: "tos",
+});
+const userData = reactive({
+  country: "USA",
+});
+const reg_in_submission = ref(false);
+const reg_show_alert = ref(false);
+const reg_alert_variant = ref("bg-blue-500");
+const reg_alert_msg = ref("Please wait! Your account is being created.");
+
+const register = (values) => {
+  reg_show_alert.value = true;
+  reg_in_submission.value = true;
+  reg_alert_variant.value = "bg-blue-500";
+  reg_alert_msg.value = "Please wait! Your account is being created.";
+
+  reg_alert_variant.value = "bg-green-500";
+  reg_alert_msg.value = "Success! Your account has been created.";
+};
+</script>
 <template>
   <!-- Registration Form -->
   <div
@@ -9,7 +37,6 @@
     {{ reg_alert_msg }}
   </div>
   <vee-form
-    v-show="tab === 'register'"
     :validation-schema="schema"
     @submit="register"
     :initial-values="userData"
