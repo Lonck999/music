@@ -14,6 +14,10 @@ function login(values) {
   login_show_alert.value = true;
   login_alert_variant.value = "bg-blue-500";
   login_alert_msg.value = "Please wait! We are logging you in.";
+
+  login_alert_variant.value = "bg-green-500";
+  login_alert_msg.value = "Success! You are now logged in.";
+  console.log(values);
 }
 </script>
 <template>
