@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive } from "vue";
+import firebase from "@/includes/firebase";
 const schema = reactive({
   name: "required|min:3|max:100|alpha_spaces",
   email: "required|min:3|max:100|email",
@@ -17,15 +18,19 @@ const reg_show_alert = ref(false);
 const reg_alert_variant = ref("bg-blue-500");
 const reg_alert_msg = ref("Please wait! Your account is being created.");
 
-const register = (values) => {
+async function register(values) {
   reg_show_alert.value = true;
   reg_in_submission.value = true;
   reg_alert_variant.value = "bg-blue-500";
   reg_alert_msg.value = "Please wait! Your account is being created.";
 
+  const userCred = await firebase
+    .auth()
+    .createUserWithEmailAndPassword(values.email, values.password);
+
   reg_alert_variant.value = "bg-green-500";
   reg_alert_msg.value = "Success! Your account has been created.";
-};
+}
 </script>
 <template>
   <!-- Registration Form -->
