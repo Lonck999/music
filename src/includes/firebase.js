@@ -1,11 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import "firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyB6gqb03fUDnjwmaZwXQEsL4M4JrZcFoR8",
-  authDomain: "music-dee57.firebaseapp.com",
-  projectId: "music-dee57",
-  storageBucket: "music-dee57.firebasestorage.app",
-  messagingSenderId: "547399717579",
-  appId: "1:547399717579:web:945cb4cf4b87f77be0014e",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
-const app = initializeApp(firebaseConfig);
+
+export default firebase.initializeApp(firebaseConfig);
