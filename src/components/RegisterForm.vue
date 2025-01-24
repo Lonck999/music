@@ -1,5 +1,5 @@
 <script setup>
-import { auth } from "@/includes/firebase";
+import { auth, usersCollection } from "@/includes/firebase";
 import { ref, reactive } from "vue";
 const schema = reactive({
   name: "required|min:3|max:100|alpha_spaces",
@@ -30,6 +30,21 @@ async function register(values) {
       values.email,
       values.password
     );
+  } catch (error) {
+    reg_in_submission.value = false;
+    reg_alert_variant.value = "bg-red-500";
+    reg_alert_msg.value =
+      "An unexpected error occurred. Please try again later.";
+    return;
+  }
+
+  try {
+    await usersCollection.add({
+      name: values.name,
+      email: values.email,
+      age: values.age,
+      country: values.country,
+    });
   } catch (error) {
     reg_in_submission.value = false;
     reg_alert_variant.value = "bg-red-500";

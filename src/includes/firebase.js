@@ -12,7 +12,11 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+// 呼叫 firebase 的 auth 方法，這是用來管理使用者的登入、登出、註冊等操作
 const auth = firebase.auth();
+// 呼叫 firebase 的 firestore 方法，這是用來管理資料庫的資料
 const db = firebase.firestore();
+// 呼叫 firestore 的 collection 方法，並指定 collection 的名稱為 users，這是用來管理使用者的資料
+const usersCollection = db.collection("users");
 
-export { auth, db };
+export { auth, db, usersCollection };
