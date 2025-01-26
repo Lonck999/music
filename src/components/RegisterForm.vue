@@ -1,5 +1,7 @@
 <script setup>
 import { auth, usersCollection } from "@/includes/firebase";
+import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
 import { ref, reactive } from "vue";
 const schema = reactive({
   name: "required|min:3|max:100|alpha_spaces",
@@ -57,6 +59,11 @@ async function register(values) {
   reg_alert_msg.value = "Success! Your account has been created.";
   console.log(userCred);
 }
+
+const userStore = useUserStore();
+const { userLoggedIn } = storeToRefs(userStore);
+
+userLoggedIn.value = true;
 </script>
 <template>
   <!-- Registration Form -->
