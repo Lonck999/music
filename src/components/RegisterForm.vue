@@ -1,5 +1,4 @@
 <script setup>
-import { auth, usersCollection } from "@/includes/firebase";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { ref, reactive } from "vue";
@@ -26,27 +25,9 @@ async function register(values) {
   reg_alert_variant.value = "bg-blue-500";
   reg_alert_msg.value = "Please wait! Your account is being created.";
 
-  let userCred = null;
   try {
-    userCred = await auth.createUserWithEmailAndPassword(
-      values.email,
-      values.password
-    );
-  } catch (error) {
-    reg_in_submission.value = false;
-    reg_alert_variant.value = "bg-red-500";
-    reg_alert_msg.value =
-      "An unexpected error occurred. Please try again later.";
-    return;
-  }
-
-  try {
-    await usersCollection.add({
-      name: values.name,
-      email: values.email,
-      age: values.age,
-      country: values.country,
-    });
+    await createUser(values);
+    console.log(userLoggedIn);
   } catch (error) {
     reg_in_submission.value = false;
     reg_alert_variant.value = "bg-red-500";
@@ -57,11 +38,12 @@ async function register(values) {
 
   reg_alert_variant.value = "bg-green-500";
   reg_alert_msg.value = "Success! Your account has been created.";
-  console.log(userCred);
 }
 
+// Pinia
 const userStore = useUserStore();
 const { userLoggedIn } = storeToRefs(userStore);
+const { register: createUser } = userStore;
 
 userLoggedIn.value = true;
 </script>
