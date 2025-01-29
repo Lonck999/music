@@ -1,5 +1,9 @@
 <script setup>
+import { useUserStore } from "@/stores/user";
 import { reactive, ref } from "vue";
+const userStore = useUserStore();
+const { authenticate } = userStore;
+
 const loginSchema = reactive({
   email: "required|email",
   password: "required|min:9|max:100",
@@ -9,11 +13,21 @@ const login_show_alert = ref(false);
 const login_alert_variant = ref("bg-blue-500");
 const login_alert_msg = ref("Please wait! Your account is being created.");
 
-function login(values) {
+async function login(values) {
   login_in_submission.value = true;
   login_show_alert.value = true;
   login_alert_variant.value = "bg-blue-500";
   login_alert_msg.value = "Please wait! We are logging you in.";
+
+  try {
+    await authenticate(values);
+  } catch (error) {
+    console.log(error);
+    login_in_submission.value = false;
+    login_alert_variant.value = "bg-red-500";
+    login_alert_msg.value = "Invalid login credentials.";
+    return;
+  }
 
   login_alert_variant.value = "bg-green-500";
   login_alert_msg.value = "Success! You are now logged in.";

@@ -1,6 +1,14 @@
 <script setup>
-import Header from '@/components/Header.vue'
-import Auth from '@/components/Auth.vue'
+import Header from "@/components/Header.vue";
+import Auth from "@/components/Auth.vue";
+import { useUserStore } from "@/stores/user";
+import { auth } from "@/includes/firebase";
+
+const userStore = useUserStore();
+
+if (auth.currentUser) {
+  userStore.userLoggedIn = true;
+}
 </script>
 
 <template>
@@ -15,9 +23,10 @@ import Auth from '@/components/Auth.vue'
       <div class="text-white main-header-content">
         <h1 class="font-bold text-5xl mb-5">Listen to Great Music!</h1>
         <p class="w-full md:w-8/12 mx-auto">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et dolor mollis, congue
-          augue non, venenatis elit. Nunc justo eros, suscipit ac aliquet imperdiet, venenatis et
-          sapien. Duis sed magna pulvinar, fringilla lorem eget, ullamcorper urna.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et
+          dolor mollis, congue augue non, venenatis elit. Nunc justo eros,
+          suscipit ac aliquet imperdiet, venenatis et sapien. Duis sed magna
+          pulvinar, fringilla lorem eget, ullamcorper urna.
         </p>
       </div>
     </div>
@@ -255,7 +264,10 @@ import Auth from '@/components/Auth.vue'
       <!-- Scrub Container  -->
       <div class="w-full h-2 rounded bg-gray-200 relative cursor-pointer">
         <!-- Player Ball -->
-        <span class="absolute -top-2.5 -ml-2.5 text-gray-800 text-lg" style="left: 50%">
+        <span
+          class="absolute -top-2.5 -ml-2.5 text-gray-800 text-lg"
+          style="left: 50%"
+        >
           <i class="fas fa-circle"></i>
         </span>
         <!-- Player Progress Bar-->

@@ -24,5 +24,10 @@ export const useUserStore = defineStore("user", () => {
     userLoggedIn.value = true;
     console.log(userCred);
   }
-  return { userLoggedIn, register };
+
+  async function authenticate(values) {
+    await auth.signInWithEmailAndPassword(values.email, values.password);
+    userLoggedIn.value = true;
+  }
+  return { userLoggedIn, register, authenticate };
 });
