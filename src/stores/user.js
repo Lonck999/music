@@ -4,19 +4,24 @@ import { ref } from "vue";
 
 export const useUserStore = defineStore("user", () => {
   const userLoggedIn = ref(false);
-  let userCred = null;
+  // 這是註冊使用者
   async function register(values) {
-    userCred = await auth.createUserWithEmailAndPassword(
+    const userCred = await auth.createUserWithEmailAndPassword(
       values.email,
       values.password
     );
-    await usersCollection.add({
+    // 這是新增使用者資料
+    await usersCollection.doc(userCred.user.uid).set({
       name: values.name,
       email: values.email,
       age: values.age,
       country: values.country,
     });
-    userLoggedIn = true;
+    // 這是更新使用者名稱
+    await userCred.user.updateProfile({
+      displayName: values.name,
+    });
+    userLoggedIn.value = true;
     console.log(userCred);
   }
   return { userLoggedIn, register };

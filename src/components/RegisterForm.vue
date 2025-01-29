@@ -29,6 +29,7 @@ async function register(values) {
     await createUser(values);
     console.log(userLoggedIn);
   } catch (error) {
+    console.log(error);
     reg_in_submission.value = false;
     reg_alert_variant.value = "bg-red-500";
     reg_alert_msg.value =
