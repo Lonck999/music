@@ -31,7 +31,7 @@ async function login(values) {
 
   login_alert_variant.value = "bg-green-500";
   login_alert_msg.value = "Success! You are now logged in.";
-  console.log(values);
+  window.location.reload();
 }
 </script>
 <template>

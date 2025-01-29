@@ -39,6 +39,7 @@ async function register(values) {
 
   reg_alert_variant.value = "bg-green-500";
   reg_alert_msg.value = "Success! Your account has been created.";
+  window.location.reload();
 }
 
 // Pinia
