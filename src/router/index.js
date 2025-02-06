@@ -16,6 +16,11 @@ const routes = [
     component: () => import("@/views/Manage.vue"),
     name: "manage",
   },
+  {
+    path: "/:catchAll(.*)*", // 這是為了讓我們的 router 可以匹配到所有的路徑，如果沒有匹配到任何的路徑，就會顯示 404 的頁面
+    component: () => import("@/views/NotFound.vue"),
+    name: "404",
+  },
 ];
 
 const router = createRouter({
