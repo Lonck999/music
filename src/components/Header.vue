@@ -16,7 +16,7 @@ const toggleAuthModal = () => {
 };
 
 function logout() {
-  if (router.name === "manage") {
+  if (userLoggedIn.value) {
     signOut();
     router.push({ name: "home" });
   }
