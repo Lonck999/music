@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useUserStore } from "@/stores/user";
+import { storeToRefs } from "pinia";
 
 const routes = [
   {
@@ -15,6 +17,15 @@ const routes = [
     path: "/manage",
     component: () => import("@/views/Manage.vue"),
     name: "manage",
+    beforeEnter: (to, from, next) => {
+      const userStore = useUserStore();
+      const { userLoggedIn } = storeToRefs(userStore);
+      if (!userLoggedIn.value) {
+        next({ name: "home" });
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/:catchAll(.*)*", // 這是為了讓我們的 router 可以匹配到所有的路徑，如果沒有匹配到任何的路徑，就會顯示 404 的頁面
@@ -27,6 +38,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   linkExactActiveClass: "text-yellow-500", // 這是為了讓我們的 link 在 active 的時候，有個特別的 class
+});
+
+router.beforeEach((to, from, next) => {
+  console.log("全局守衛");
+  next();
 });
 
 export default router;

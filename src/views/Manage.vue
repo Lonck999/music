@@ -1,4 +1,5 @@
-<script lang="ts" setup></script>
+<script setup></script>
+
 <template>
   <!-- Main Content -->
   <section class="container mx-auto mt-6">

@@ -2,6 +2,7 @@
 import { useModalStore } from "@/stores/modal";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
+import router from "@/router";
 const modalStore = useModalStore();
 const { isOpen } = storeToRefs(modalStore);
 
@@ -13,6 +14,13 @@ const toggleAuthModal = () => {
   isOpen.value = !isOpen.value;
   console.log(isOpen.value);
 };
+
+function logout() {
+  if (router.name === "manage") {
+    signOut();
+    router.push({ name: "home" });
+  }
+}
 </script>
 <template>
   <!-- Header -->
@@ -47,7 +55,7 @@ const toggleAuthModal = () => {
               >
             </li>
             <li>
-              <a class="px-2 text-white" href="#" @click.prevent="signOut"
+              <a class="px-2 text-white" href="#" @click.prevent="logout"
                 >Logout</a
               >
             </li>
