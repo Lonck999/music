@@ -17,14 +17,8 @@ const routes = [
     path: "/manage",
     component: () => import("@/views/Manage.vue"),
     name: "manage",
-    beforeEnter: (to, from, next) => {
-      const userStore = useUserStore();
-      const { userLoggedIn } = storeToRefs(userStore);
-      if (!userLoggedIn.value) {
-        next({ name: "home" });
-      } else {
-        next();
-      }
+    meta: {
+      requiresAuth: true, // requiresAuth 是指這個路由需要經過認證
     },
   },
   {
@@ -41,8 +35,18 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log("全局守衛");
-  next();
+  if (!to.meta.requiresAuth) {
+    next();
+    return;
+  }
+
+  const userStore = useUserStore();
+  const { userLoggedIn } = storeToRefs(userStore);
+  if (!userLoggedIn.value) {
+    next({ name: "home" });
+  } else {
+    next();
+  }
 });
 
 export default router;
