@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const isDragOver = ref(false);
+</script>
 <template>
   <div class="bg-white rounded border border-gray-200 relative flex flex-col">
     <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
@@ -9,6 +13,16 @@
       <!-- Upload Dropbox -->
       <div
         class="w-full px-10 py-20 rounded text-center cursor-pointer border border-dashed border-gray-400 text-gray-400 transition duration-500 hover:text-white hover:bg-green-400 hover:border-green-400 hover:border-solid"
+        :class="{
+          'bg-green-400 border-green-400 border-dashed text-white': isDragOver,
+        }"
+        @drag.prevent.stop=""
+        @dragstart.prevent.stop=""
+        @dragend.prevent.stop="isDragOver = false"
+        @dragover.prevent.stop="isDragOver = true"
+        @dragenter.prevent.stop="isDragOver = true"
+        @dragleave.prevent.stop="isDragOver = false"
+        @drop.prevent.stop="isDragOver = false"
       >
         <h5>Drop your files here</h5>
       </div>
