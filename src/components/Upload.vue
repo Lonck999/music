@@ -2,8 +2,16 @@
 import { ref } from "vue";
 
 const isDragOver = ref(false);
-function upload(e) {
+function upload($event) {
   isDragOver.value = false;
+  const files = [...$event.dataTransfer.files];
+  files.forEach((file) => {
+    console.log(file);
+    if (file.type !== "audio/mpeg") {
+      alert("Please upload a valid audio file");
+      return;
+    }
+  });
 }
 </script>
 <template>
@@ -25,7 +33,7 @@ function upload(e) {
         @dragover.prevent.stop="isDragOver = true"
         @dragenter.prevent.stop="isDragOver = true"
         @dragleave.prevent.stop="isDragOver = false"
-        @drop.prevent.stop="upload"
+        @drop.prevent.stop="upload($event)"
       >
         <h5>Drop your files here</h5>
       </div>
