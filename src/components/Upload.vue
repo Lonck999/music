@@ -2,6 +2,9 @@
 import { ref } from "vue";
 
 const isDragOver = ref(false);
+function upload(e) {
+  isDragOver.value = false;
+}
 </script>
 <template>
   <div class="bg-white rounded border border-gray-200 relative flex flex-col">
@@ -22,7 +25,7 @@ const isDragOver = ref(false);
         @dragover.prevent.stop="isDragOver = true"
         @dragenter.prevent.stop="isDragOver = true"
         @dragleave.prevent.stop="isDragOver = false"
-        @drop.prevent.stop="isDragOver = false"
+        @drop.prevent.stop="upload"
       >
         <h5>Drop your files here</h5>
       </div>
