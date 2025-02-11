@@ -17,17 +17,34 @@ function upload($event) {
     const songRef = storageRef.child(`songs/${file.name}`); // firebase-project-id.appspot.com/songs/song.mp3
     const task = songRef.put(file);
 
-    uploads.value.push({
-      task,
-      name: file.name,
-      currentProgress: 0,
-    });
+    const uploadIndex =
+      uploads.value.push({
+        task,
+        name: file.name,
+        currentProgress: 0,
+        variant: "bg-blue-400",
+        icon: "fas fa-spinner fa-spin",
+        text_class: "",
+      }) - 1;
 
-    task.on("state_changed", (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      uploads.value.find((upload) => upload.task === task).currentProgress =
-        progress;
-    });
+    task.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        uploads.value[uploadIndex].currentProgress = progress;
+      },
+      (error) => {
+        uploads.value[uploadIndex].variant = "bg-red-400";
+        uploads.value[uploadIndex].icon = "fas fa-times";
+        uploads.value[uploadIndex].text_class = "text-red-400";
+      },
+      () => {
+        uploads.value[uploadIndex].variant = "bg-green-400";
+        uploads.value[uploadIndex].icon = "fas fa-check";
+        uploads.value[uploadIndex].text_class = "text-green-400";
+      }
+    );
   });
 }
 </script>
@@ -58,12 +75,15 @@ function upload($event) {
       <!-- Progess Bars -->
       <div class="mb-4" v-for="upload in uploads" :key="upload.name">
         <!-- File Name -->
-        <div class="font-bold text-sm">{{ upload.name }}</div>
+        <div class="font-bold text-sm" :class="upload.text_class">
+          <i :class="upload.icon"></i>
+          {{ upload.name }}
+        </div>
         <div class="flex h-4 overflow-hidden bg-gray-200 rounded">
           <!-- Inner Progress Bar -->
           <div
-            class="transition-all progress-bar bg-blue-400"
-            :class="'bg-blue-400'"
+            class="transition-all progress-bar"
+            :class="upload.variant"
             :style="{ width: upload.currentProgress + '%' }"
           ></div>
         </div>
