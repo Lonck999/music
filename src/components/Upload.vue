@@ -1,12 +1,14 @@
 <script setup>
-import { storage, auth } from "@/includes/firebase";
+import { storage, auth, songsCollection } from "@/includes/firebase";
 import { ref } from "vue";
 
 const isDragOver = ref(false);
 const uploads = ref([]);
 function upload($event) {
   isDragOver.value = false;
-  const files = [...$event.dataTransfer.files];
+  const files = $event.dataTransfer
+    ? [...$event.dataTransfer.files]
+    : [...$event.target.files];
   files.forEach((file) => {
     console.log(file);
     if (file.type !== "audio/mpeg") {
@@ -49,6 +51,7 @@ function upload($event) {
           commentCount: 0,
         };
         song.url = await task.snapshot.ref.getDownloadURL();
+        await songsCollection.add(song);
         uploads.value[uploadIndex].variant = "bg-green-400";
         uploads.value[uploadIndex].icon = "fas fa-check";
         uploads.value[uploadIndex].text_class = "text-green-400";
@@ -80,6 +83,7 @@ function upload($event) {
       >
         <h5>Drop your files here</h5>
       </div>
+      <input type="file" multiple @change="upload($event)" />
       <hr class="my-6" />
       <!-- Progess Bars -->
       <div class="mb-4" v-for="upload in uploads" :key="upload.name">
