@@ -21,5 +21,6 @@ const db = firebase.firestore();
 const storage = firebase.storage();
 // 呼叫 firestore 的 collection 方法，並指定 collection 的名稱為 users，這是用來管理使用者的資料
 const usersCollection = db.collection("users");
+const songsCollection = db.collection("songs");
 
-export { auth, db, usersCollection, storage };
+export { auth, db, usersCollection, storage, songsCollection };
