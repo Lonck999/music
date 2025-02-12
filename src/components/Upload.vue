@@ -1,6 +1,6 @@
 <script setup>
 import { storage, auth, songsCollection } from "@/includes/firebase";
-import { ref } from "vue";
+import { ref, onBeforeUnmount } from "vue";
 
 const isDragOver = ref(false);
 const uploads = ref([]);
@@ -59,6 +59,11 @@ function upload($event) {
     );
   });
 }
+onBeforeUnmount(() => {
+  uploads.value.forEach((upload) => {
+    upload.task.cancel();
+  });
+});
 </script>
 <template>
   <div class="bg-white rounded border border-gray-200 relative flex flex-col">
