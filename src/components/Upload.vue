@@ -1,5 +1,5 @@
 <script setup>
-import { storage } from "@/includes/firebase";
+import { storage, auth } from "@/includes/firebase";
 import { ref } from "vue";
 
 const isDragOver = ref(false);
@@ -39,7 +39,16 @@ function upload($event) {
         uploads.value[uploadIndex].icon = "fas fa-times";
         uploads.value[uploadIndex].text_class = "text-red-400";
       },
-      () => {
+      async () => {
+        const song = {
+          uid: auth.currentUser.uid,
+          displayName: auth.currentUser.displayName,
+          originalName: task.snapshot.ref.name,
+          modifiedName: task.snapshot.ref.name,
+          genre: "",
+          commentCount: 0,
+        };
+        song.url = await task.snapshot.ref.getDownloadURL();
         uploads.value[uploadIndex].variant = "bg-green-400";
         uploads.value[uploadIndex].icon = "fas fa-check";
         uploads.value[uploadIndex].text_class = "text-green-400";
