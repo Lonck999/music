@@ -59,6 +59,11 @@ function upload($event) {
     );
   });
 }
+function cancelUploads() {
+  uploads.value.forEach((upload) => {
+    upload.task.cancel();
+  });
+}
 onBeforeUnmount(() => {
   uploads.value.forEach((upload) => {
     upload.task.cancel();
