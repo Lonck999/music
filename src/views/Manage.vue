@@ -1,5 +1,11 @@
 <script setup>
+import { onBeforeRouteLeave } from "vue-router";
 import Upload from "@/components/Upload.vue";
+const refUpload = ref(null);
+// onBeforeRouteLeave((to, from, next) => {
+//   refUpload.value.cancelUploads();
+//   next();
+// });
 </script>
 
 <template>
@@ -7,7 +13,7 @@ import Upload from "@/components/Upload.vue";
   <section class="container mx-auto mt-6">
     <div class="md:grid md:grid-cols-3 md:gap-4">
       <div class="col-span-1">
-        <Upload />
+        <Upload ref="refUpload" />
       </div>
       <div class="col-span-2">
         <div
