@@ -1,11 +1,24 @@
 <script setup>
-import { onBeforeRouteLeave } from "vue-router";
 import Upload from "@/components/Upload.vue";
-// const refUpload = ref(null);
-// onBeforeRouteLeave((to, from, next) => {
-//   refUpload.value.cancelUploads();
-//   next();
-// });
+import { songsCollection, auth } from "@/includes/firebase";
+import { ref } from "vue";
+
+const songs = ref([]);
+
+async function getSongs() {
+  const snapshot = await songsCollection
+    .where("uid", "==", auth.currentUser.uid)
+    .get();
+  snapshot.forEach((document) => {
+    const song = {
+      docID: document.id,
+      ...document.data(),
+    };
+    songs.value.push(song);
+  });
+}
+
+getSongs();
 </script>
 
 <template>
