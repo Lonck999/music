@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+  song: {
+    type: Object,
+    required: true, // required是指這個屬性是必須的
+  },
+});
+</script>
 <template>
   <!-- Composition Items -->
   <div class="border border-gray-200 p-3 mb-4 rounded">
@@ -46,66 +55,6 @@
           Go Back
         </button>
       </form>
-    </div>
-  </div>
-  <div class="border border-gray-200 p-3 mb-4 rounded">
-    <div>
-      <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-      <button
-        class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right"
-      >
-        <i class="fa fa-times"></i>
-      </button>
-      <button
-        class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right"
-      >
-        <i class="fa fa-pencil-alt"></i>
-      </button>
-    </div>
-  </div>
-  <div class="border border-gray-200 p-3 mb-4 rounded">
-    <div>
-      <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-      <button
-        class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right"
-      >
-        <i class="fa fa-times"></i>
-      </button>
-      <button
-        class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right"
-      >
-        <i class="fa fa-pencil-alt"></i>
-      </button>
-    </div>
-  </div>
-  <div class="border border-gray-200 p-3 mb-4 rounded">
-    <div>
-      <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-      <button
-        class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right"
-      >
-        <i class="fa fa-times"></i>
-      </button>
-      <button
-        class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right"
-      >
-        <i class="fa fa-pencil-alt"></i>
-      </button>
-    </div>
-  </div>
-  <div class="border border-gray-200 p-3 mb-4 rounded">
-    <div>
-      <h4 class="inline-block text-2xl font-bold">Song Name</h4>
-      <button
-        class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right"
-      >
-        <i class="fa fa-times"></i>
-      </button>
-      <button
-        class="ml-1 py-1 px-2 text-sm rounded text-white bg-blue-600 float-right"
-      >
-        <i class="fa fa-pencil-alt"></i>
-      </button>
     </div>
   </div>
 </template>
